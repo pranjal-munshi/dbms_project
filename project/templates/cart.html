@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cart - Blinkit Clone</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='cart_styles.css') }}">
+    <script>
+       function updateCart() {
+            const cartItems = [];
+            const quantityInputs = document.querySelectorAll(".quantity-input");
+
+            quantityInputs.forEach(input => {
+                const productId = input.getAttribute("data-product-id");
+                const quantity = input.value;
+                cartItems.push({ product_id: productId, quantity: quantity });
+            });
+
+            fetch("{{ url_for('update_cart') }}", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(cartItems),
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log("Cart updated:", data);
+                alert("Cart updated successfully!");
+                location.reload();  // Refresh the page to show updated cart items
+            })
+            .catch(error => console.error("Error:", error));
+        }
+
+
+
+        function removeFromCart(productId) {
+            fetch("{{ url_for('remove_from_cart') }}", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ product_id: productId }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log("Item removed from cart:", data);
+                alert("Item removed successfully!");
+                location.reload();  // Refresh the page to show updated cart items
+            })
+            .catch(error => console.error("Error:", error));
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const updateCartButton = document.querySelector(".update-cart-btn");
+            if (updateCartButton) {
+                updateCartButton.addEventListener("click", (event) => {
+                    event.preventDefault();
+                    updateCart();
+                });
+            }
+        });
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const removeButtons = document.querySelectorAll(".remove-btn");
+            removeButtons.forEach(button => {
+                button.addEventListener("click", (event) => {
+                    event.preventDefault();
+                    const productId = button.getAttribute("data-product-id");  // Get product ID from data attribute
+                    removeFromCart(productId);
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+    <header class="header">
+        <div class="logo">Blinkit Clone</div>
+        <nav class="nav-links">
+            <a href="{{ url_for('home') }}">Home</a>
+            <a href="{{ url_for('products') }}">Categories</a>
+            <a href="{{ url_for('cart') }}">Cart</a>
+        </nav>
+    </header>
+
+    <main class="cart-container">
+        <h2>Your Shopping Cart</h2>
+        
+        <div class="cart-items">
+            <form action="{{ url_for('cart') }}" method="POST">
+                <table class="cart-table">
+                    <thead>
+                        <tr>
+                            <th>Product</th>
+                            <th>Price</th>
+                            <th>Quantity</th>
+                            <th>Total</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if cart_items %}
+                            {% for item in cart_items %}
+                                <tr>
+                                    <td>{{ item[0] }} {% if a and item[3] in a %}
+                                        <p class="error-msg">
+                                            Available Quantity: {{ a[item[3]] }}
+                                        </p>
+                                    {% endif %}</td>
+                                    
+                                    <td>${{ item[1] }}</td>
+                                    <td>
+                                        <input type="number" name="quantity_{{ item[0] }}" data-product-id="{{item[3]}}" class="quantity-input" value="{{ item[2] }}" min="1">
+                                    </td>
+                                    <td>${{ item[4] }}</td>
+                                    <td>
+                                        <button type="submit" formaction="{{ url_for('remove_from_cart') }}" class="remove-btn" data-product-id="{{item[3]}}" name="cart_item_id" value="{{ item['cart_item_id'] }}">Remove</button>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        {% else %}
+                            <tr>
+                                <td colspan="5">Your cart is empty.</td>
+                            </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+                {% if cart_items %}
+                    <button type="button" class="update-cart-btn">Update Cart</button>  <!-- Use type="button" instead of "submit" -->
+                {% endif %}
+            </form>
+        </div>
+
+        <div class="cart-summary">
+            {% if cart_items %}
+                <p><strong>Total: ${{ total }}</strong></p>
+                <form action="{{ url_for('checkout') }}" method="POST">
+                    <button type="submit" class="checkout-btn">Proceed to Checkout</button>
+                </form>
+            {% else %}
+                <p>Your cart is empty. Add some products to your cart!</p>
+            {% endif %}
+        </div>
+
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2024 Blinkit Clone</p>
+    </footer>
+</body>
+</html>

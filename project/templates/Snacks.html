@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snacks - Blinkit Clone</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='Snacks.css') }}">
+    <script>
+        function addToCart(productId, productName, productPrice) {
+            fetch('/add_to_cart', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    id: productId,
+                    name: productName,
+                    price: productPrice,
+                    quantity: 1
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert('Product added to cart!');    
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+        }
+    </script>
+</head>
+<body>
+    <header>
+        <div class="logo">Blinkit Clone</div>
+        <nav class="nav-links">
+            <ul>
+                <li><a href="{{ url_for('home') }}">Home</a></li>
+                <li><a href="{{ url_for('products') }}">Categories</a></li>
+                <li><a href="{{ url_for('cart') }}">Cart</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="products-container">
+        <h2>Snacks</h2>
+        <div class="products-grid">
+            {% for product in products %}
+                <div class="product-card">
+                    <img src="static\images\Snacks\{{product[1]}}.jpg" alt="{{ product[1] }}">
+                    <h3>{{ product[1]}}</h3>
+                    <p>${{ product[2] }}</p>
+                    <button class="addtoacart" onclick="addToCart({{ product[0] }} , '{{ product[1] }}', {{ product[2] }})">ADD TO CART</button>
+                </div>
+            {% endfor %}
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2024 Blinkit Clone</p>
+    </footer>
+</body>
+</html>

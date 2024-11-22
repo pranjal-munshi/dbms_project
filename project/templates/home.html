@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='home_styles.css') }}">
+    <title>Blinkit Clone</title>
+    <script>
+        function addToCart(productId, productName, productPrice) {
+            fetch('/add_to_cart', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    id: productId,
+                    name: productName,
+                    price: productPrice,
+                    quantity: 1
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert('Product added to cart!');    
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+        }
+    </script>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="logo">Blinkit Clone</div>
+        <nav>
+            <ul>
+                <li><a href="home">Home</a></li>
+                <li><a href="products">Products</a></li>
+                <li><a href="cart">Cart</a></li>
+                {%if u %}
+                    <li><a href='logout'>Logout</a></li>
+                {% else %}
+                    <li><a href="/">Login/Register</a></li>
+                {% endif %}
+
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>Shop the Best Products!</h1>
+        <p>Get everything you need delivered to your door.</p>
+        <a href="products" class="cta-button">Shop Now</a>
+    </section>
+
+    <!-- Featured Products -->
+    <section class="featured-products">
+        <h2>Featured Products</h2>
+        <div class="product-grid">
+            {% for product in featured_products %}
+                <div class="product-card">
+                    <img src="../static/{{product[0]}}.jpeg" alt="{{ product[0] }}">
+                    <h3>{{ product[0] }}</h3>
+                    <p>${{ product[1] }}</p>
+                    <button class="cartbutton" onclick="addToCart({{ loop.index }}, '{{ product[0] }}', {{ product[1] }})">Add to Cart</button>
+                </div>
+            {% endfor %}
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 Blinkit Clone. All rights reserved.</p>
+        <ul>
+            <li><a href="#">Customer Support</a></li>
+            <li><a href="#">About Us</a></li>
+            <li><a href="#">Privacy Policy</a></li>
+        </ul>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,125 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+    }
+
+header {
+    background-color: #0b0b0b;
+    color: #ece6e6;
+    padding: 1rem 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+.nav-links a {
+    color: #fff;
+    text-decoration: none;
+    margin-left: 1.5rem;
+    font-size: 1rem;
+}
+.nav-links a:hover {
+    text-decoration: underline;
+}
+nav ul {
+    list-style-type: none;
+    display: flex;
+    /* gap: 1rem; */
+}
+
+nav ul li a {
+    color: rgb(207, 208, 217);
+    text-decoration: none;
+}
+.products-container {
+    text-align: center;
+    margin: 2rem;
+}
+
+.products-container h2 {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    color: #333;
+}
+
+.products-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+}
+
+.product-card {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 1rem;
+    text-align: center;
+    transition: transform 0.2s ease;
+}
+
+.product-card img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+}
+
+.product-card h3 {
+    font-size: 1.2rem;
+    color: #333;
+}
+
+.product-card p {
+    font-size: 1rem;
+    color: #666;
+}
+
+.product-card:hover {
+    transform: scale(1.05);
+}
+.footer {
+    background-color: #070707;
+    color: #fff;
+    text-align: center;
+   
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+}
+
+/* Media query for smaller screens */
+@media (max-width: 768px) {
+    .categories-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+    .categories-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+.addtoacart{
+    padding:10px 15px;
+    border-radius: 3px;
+    border-width: 0.01em;
+    background-color: whitesmoke;
+    border-color: #100e0e;
+    transition: transform 1.2s ease;
+}
+
+.addtoacart:hover{
+    background-color: rgb(17, 15, 15);
+    color: #cdcdcd;
+    transform: scale(1.02);
+}

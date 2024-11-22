@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Categories - Blinkit Clone</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='categories_styles.css') }}">
+</head>
+<body>
+    <header class="header">
+        <div class="logo">Blinkit Clone</div>
+        <nav class="nav-links">
+            <a href="home">Home</a>
+            <a href="cart">Cart</a>
+           
+        </nav>
+    </header>
+
+    <main class="categories-container">
+        <h2>Categories</h2>
+        <div class="categories-grid">
+            <div class="category-card">
+                <img src="static/images/fruits.jpg" alt="Fruits">
+                <h3><a href="fruits">Fruits</a></h3>
+            </div>
+            <div class="category-card">
+                <img src="static/images/vegetables.jpg" alt="Vegetables">
+                
+                <h3><a href="Vegetables">Vegetables</a></h3>
+            </div>
+            <div class="category-card">
+                <img src="static/images/dairy.jpg" alt="Dairy Products">
+                <h3><a href="Dairy">Dairy</a></h3>
+            </div>
+            <div class="category-card">
+                <img src="static/images/snacks.jpg" alt="Snacks">
+                <h3><a href="Snacks">Snacks</a></h3>
+            </div>
+            <div class="category-card">
+                <img src="static/images/bevarages.jpg" alt="Beverages">
+                <h3><a href="Beverages">Beverages</a></h3>
+            </div>
+            <div class="category-card">
+                <img src="static/images/personal.jpg" alt="Personal Care">
+                <h3><a href="personalcare">Personal Care</a></h3>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2024 Blinkit Clone</p>
+    </footer>
+</body>
+</html>

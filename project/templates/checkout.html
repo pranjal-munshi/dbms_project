@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='checkout.css') }}">
+
+
+    <title>Blinkit Clone</title>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="logo">Blinkit Clone</div>
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('home') }}">Home</a></li>
+                <li><a href="{{ url_for('products') }}">Products</a></li>
+                <li><a href="{{ url_for('logout') }}">Logout</a></li>  
+            </ul>
+        </nav>
+    </header>
+    
+    
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="text">
+        <h1>THANK YOU FOR SHOPING!!!</h1>
+        <p>Get everything you need delivered to your door.</p>
+        <p>For purchasing click the below button </p>
+        <a href="{{ url_for('products') }}" class="cta-button">Shop Now</a>
+        </div>
+    </section>
+
+    <!-- Featured Products -->
+    
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 Blinkit Clone. All rights reserved.</p>
+        <ul>
+            <li><a href="#">Customer Support</a></li>
+            <li><a href="#">About Us</a></li>
+            <li><a href="#">Privacy Policy</a></li>
+        </ul>
+    </footer>
+</body>
+</html>

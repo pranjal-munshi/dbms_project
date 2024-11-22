@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - Blinkit Clone</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='signup_styles.css') }}">
+</head>
+<body>
+    <div class="signup-container">
+        <div class="logo">
+            <h1>Blinkit Clone</h1>
+        </div>
+        <form class="signup-form">
+            <h2>Sign Up</h2>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" placeholder="Enter your email" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" placeholder="Enter your password" required>
+            </div>
+            <div id="flash-container" class="flash-container"></div>
+            <button type="button" class="signup-button" onclick="handleSignUp()">Sign Up</button>
+            <div class="alternative-options">
+                <p>Already have an account? <a href="/">Login</a></p>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        function handleSignUp() {
+            const email = document.querySelector("#email").value;
+            const password = document.querySelector("#password").value;
+
+            fetch("{{ url_for('signup') }}", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ email: email, password: password }),
+            })
+            .then(response => {
+                if (response.redirected) {
+                    window.location.href = response.url;  // Redirect to the login page if redirected by the backend
+                } else {
+                    return response.json();  // Parse the JSON response if no redirect
+                }
+            })
+            .then(data => {
+                if (data && data.message) {
+                    const flashContainer = document.getElementById("flash-container");
+                    flashContainer.innerHTML = `<div class="flash-message flash-info">${data.message}</div>`;
+                }
+            })
+            .catch(error => console.error("Error:", error));
+        }
+    </script>
+</body>
+</html>
